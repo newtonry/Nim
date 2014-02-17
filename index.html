@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <title>Nim</title>
+	<link rel="stylesheet" type="text/css" href="stylesheets/main.css" />
+	<link rel="stylesheet" type="text/css" href="stylesheets/jquery-ui-1.10.4.custom.min.css" />
+ </head>
+ <body>
+	 <div id='game-holder'></div>
+ </body>
+
+ <script type='text/javascript' src='scripts/jquery-2.1.0.min.js'></script>
+ <script type='text/javascript' src='scripts/jquery-ui-1.10.4.custom.min.js'></script> 
+ <script type='text/javascript' src='scripts/underscore-min.js'></script> 
+ <script type='text/javascript' src='scripts/ui.js'></script>
+ <script type='text/javascript' src='scripts/nim.js'></script>
+ <script>
+	 $(document).ready(function(){
+		 var game = new Nim.Game();
+		 game.start($('#game-holder'));
+	 });
+ </script>
+</html>

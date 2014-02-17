@@ -1,0 +1,25 @@
+#game-holder {
+	width: 500px;
+	height: 500px;
+}
+.column {
+	width: 30%;
+	height: 100%;
+	float: left;
+	margin-left: 2%;
+}
+
+.row {
+	width: 100%;
+	height: 15px;
+	margin: 15px 0px 15px 0px;
+	background-color: #000;
+}
+
+.ui-selecting {
+	background-color: #1719FC;
+}
+
+.ui-selected {
+	background-color: #4D4FFF; 
+}
