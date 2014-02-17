@@ -6,6 +6,7 @@
 		this.humanPlayersTurn = false;
 		this.ui = new Nim.UI($canvas);
 		this.ui.setup([5,4,3], this.nextTurn.bind(this));		
+		this.ai = new Nim.AI($canvas);
 	};
 	
 	Game.prototype.nextTurn = function() {
@@ -13,6 +14,7 @@
 			alert("The game is over");
 		}
 		this.humanPlayersTurn = !this.humanPlayersTurn;
+		this.ai.playTurn();
 	};
 	
 	Game.prototype.isWon = function() {
