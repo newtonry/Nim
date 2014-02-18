@@ -11,16 +11,19 @@
 	};
 
 	UI.prototype.makeColumnsSelectable = function(onTurnComplete) {
+		var that = this;
 		this.$canvas.find('.column').selectable({
 			stop: function() {
-				$(".ui-selected", this).each(function(){
-						$(this).toggleClass('stick');
-					var that = this;
-					$(this).fadeOut(400, function(){ 
-						$(that).remove();
+				if (that.$canvas.find(".ui-selected").length > 0) {
+					$(".ui-selected", this).each(function(){
+							$(this).toggleClass('stick');
+						var that = this;
+						$(this).fadeOut(400, function(){ 
+							$(that).remove();
+						});
 					});
-				});
-				onTurnComplete();
+					onTurnComplete();
+				}
 			}
 		});
 	};
