@@ -4,10 +4,67 @@
 		this.$canvas = $canvas;
 	};
 
-	AI.prototype.playTurn = function() {
+	AI.prototype.playTurn = function(onTurnComplete) {
+		var winningMove = (this.pickWinningMove() || this.pickRandomMove());
+		var that = this;
+
+		if (!winningMove) {
+			debugger
+		}
+
+		setTimeout(function(){
+			that.takeSticks(winningMove[0], winningMove[1], onTurnComplete);
+		}, 750);
+	};
+
+	AI.prototype.pickWinningMove = function() {
 		var stickCounts = this.getStickCounts();
-		var xorState = this.xorify(this.binify(stickCounts));
-		console.log(xorState);
+		var length = stickCounts.length;
+		
+		for(var column = 0; column < length; column++) {
+			var stickCount = stickCounts[column];
+			var decrement = 1;
+
+			while (stickCount - decrement >= 0) {
+				var possibleCounts = stickCounts.slice();
+				possibleCounts[column] -= decrement;
+				var xorState = this.xorify(this.binify(possibleCounts));
+
+				if (xorState === "000") {
+					return [decrement, column];
+				}
+				decrement++;
+			}
+		}
+		return false;	
+	};
+
+	AI.prototype.pickRandomMove = function() {
+		var stickCounts = this.getStickCounts();
+		var column = 0;
+
+		while (column < stickCounts.length) {
+			if (stickCounts[column] > 0) {
+				return [1, column];
+			}
+			column++;
+		}
+	};
+
+	AI.prototype.takeSticks = function(num, column, onTurnComplete) {
+		var $column = $(this.$canvas.find('.column')[column]);
+		var $removalSticks = $($column.find('.stick').slice(0, num))
+		
+		$removalSticks.addClass('ai-removing');
+
+		setTimeout(function(){
+			$removalSticks.each(function(ind, stick) {
+				$(stick).fadeOut(400, function() {
+					$(stick).remove();
+				});
+			});
+			onTurnComplete();
+		}, 500);
 	};
 
 	AI.prototype.getStickCounts = function() {

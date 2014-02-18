@@ -3,18 +3,41 @@
 	var Game = root.Nim.Game = function() {};
 	
 	Game.prototype.start = function($canvas) {
-		this.humanPlayersTurn = false;
 		this.ui = new Nim.UI($canvas);
-		this.ui.setup([5,4,3], this.nextTurn.bind(this));		
+		this.ui.setup([5,4,3], this.setComputerTurn.bind(this));
 		this.ai = new Nim.AI($canvas);
 	};
 	
-	Game.prototype.nextTurn = function() {
+	Game.prototype.setHumanTurn = function() {
+		this.humanPlayersTurn = true;
+		this.ui.enableSelection();
+
+		var that = this;
+		var onTurnComplete = function() {
+			that.alertIfWon();
+			that.setComputerTurn();
+		};
+	};
+
+	Game.prototype.setComputerTurn = function() {
+		this.humanPlayersTurn = false;
+		this.ui.disableSelection();
+		
+		var that = this;
+		var onTurnComplete = function() {
+			that.alertIfWon();
+			that.setHumanTurn();
+		};
+		
+		this.ai.playTurn(onTurnComplete.bind(this));
+	};
+
+	Game.prototype.alertIfWon = function() {
 		if (this.isWon()) {
-			alert("The game is over");
+			var output = (this.humanPlayersTurn ? "You" : "The computer") + " wins!"
+			alert(output);
+			return;
 		}
-		this.humanPlayersTurn = !this.humanPlayersTurn;
-		this.ai.playTurn();
 	};
 	
 	Game.prototype.isWon = function() {

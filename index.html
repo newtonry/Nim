@@ -3,10 +3,11 @@
  <head>
   <meta charset="UTF-8">
   <title>Nim</title>
-	<link rel="stylesheet" type="text/css" href="stylesheets/main.css" />
 	<link rel="stylesheet" type="text/css" href="stylesheets/jquery-ui-1.10.4.custom.min.css" />
+	<link rel="stylesheet" type="text/css" href="stylesheets/main.css" />
  </head>
  <body>
+	 <button id='reset-game'>Reset Game</button>
 	 <div id='game-holder'></div>
  </body>
 
@@ -18,8 +19,18 @@
  <script type='text/javascript' src='scripts/nim.js'></script>
  <script>
 	 $(document).ready(function(){
-		 var game = new Nim.Game();
-		 game.start($('#game-holder'));
+		 function newGame() {
+			 var game = new Nim.Game();
+			 game.start($('#game-holder'));
+		 }
+
+		 newGame();
+		 
+		 $('#reset-game').click(function(){
+			 newGame();
+		 });
+
+		 
 	 });
  </script>
 </html>

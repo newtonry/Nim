@@ -7,7 +7,10 @@
 	UI.prototype.setup = function(columns, nextTurn) {
 		this.$canvas.empty();
 		this.draw(columns);
+		this.makeColumnsSelectable(nextTurn);
+	};
 
+	UI.prototype.makeColumnsSelectable = function(onTurnComplete) {
 		this.$canvas.find('.column').selectable({
 			stop: function() {
 				$(".ui-selected", this).each(function(){
@@ -17,10 +20,18 @@
 						$(that).remove();
 					});
 				});
-				nextTurn();
+				onTurnComplete();
 			}
 		});
 	};
+
+	UI.prototype.enableSelection = function() {
+		this.$canvas.find('.column').selectable("enable");
+	}
+
+	UI.prototype.disableSelection = function() {
+		this.$canvas.find('.column').selectable("disable");
+	}
 
 	UI.prototype.draw = function(columns) {
 		var output = "";
